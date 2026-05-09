@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Cassava Dish Preparations • Nigerian Kitchen</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fef7e0;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+      margin: 0;
+      color: #2e241b;
+    }
+
+    .app-container {
+      max-width: 700px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 3rem 3rem 2.5rem 2.5rem;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.08), 0 10px 15px rgba(93, 53, 18, 0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f3e1c6;
+    }
+
+    .header {
+      background: #5a3e1a;
+      background-image: linear-gradient(135deg, #6b4c2a 0%, #4a3516 100%);
+      padding: 2rem 1.8rem 1.8rem;
+      text-align: center;
+      color: #f7e5c2;
+      position: relative;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 20%;
+      width: 60%;
+      height: 20px;
+      background: #f9d28b;
+      filter: blur(12px);
+      opacity: 0.5;
+    }
+
+    .header h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-shadow: 2px 2px 0 #382812;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .header h1 span {
+      background: #f5b042;
+      color: #2e2410;
+      font-size: 1.3rem;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      text-shadow: none;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-left: 0.3rem;
+    }
+
+    .subhead {
+      color: #edd7b0;
+      font-weight: 400;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .subhead i {
+      font-style: normal;
+      font-size: 1.2rem;
+    }
+
+    .dish-selector {
+      background: #fef3df;
+      padding: 1.8rem 1.5rem 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      border-bottom: 2px dashed #d9b382;
+    }
+
+    .dish-btn {
+      background: #fff6eb;
+      border: 2px solid #c89f6b;
+      color: #4b3621;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #fffbf5;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 8px rgba(122, 77, 25, 0.08);
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .dish-btn i {
+      font-style: normal;
+      font-size: 1.2rem;
+    }
+
+    .dish-btn.active {
+      background: #c57b2a;
+      border-color: #7b4a1b;
+      color: white;
+      box-shadow: 0 8px 14px rgba(180, 100, 25, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .card {
+      padding: 1.8rem 1.8rem 2rem;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .dish-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 2px solid #f3dbb0;
+      padding-bottom: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .dish-title h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #4c331a;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .time-badge {
+      background: #fbe9cd;
+      border-radius: 30px;
+      padding: 0.3rem 1.2rem;
+      font-weight: 600;
+      color: #5e3a18;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .ingredients-box {
+      background: #faf5ea;
+      border-radius: 2rem;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid #edd4b0;
+    }
+
+    .ingredients-box h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: #5e3a1a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ingredient-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      list-style: none;
+    }
+
+    .ingredient-item {
+      background: white;
+      border-radius: 2rem;
+      padding: 0.4rem 1.1rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border: 1px solid #e7c594;
+      color: #4a3720;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .step {
+      background: #fffbf5;
+      border-radius: 1.5rem;
+      padding: 1rem 1.4rem;
+      border-left: 6px solid #c57b2a;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: 0 6px 12px rgba(160, 100, 30, 0.08);
+    }
+
+    .step-number {
+      background: #c57b2a;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step p {
+      color: #412f1d;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .tip-box {
+      background: #faf0db;
+      border-radius: 1.2rem;
+      padding: 1rem 1.3rem;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: #5c401f;
+      border: 1px solid #e2c18e;
+      margin-top: 0.2rem;
+    }
+
+    footer {
+      background: #fdefd4;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #6b4e2c;
+      border-top: 1px solid #e6c794;
+    }
+
+    @media (max-width: 480px) {
+      .dish-btn {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.9rem;
+      }
+      .header h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <div class="header">
+    <h1>
+      🥔 CASSAVA DISHES
+      <span>3 ways</span>
+    </h1>
+    <div class="subhead">
+      <i>🍽️</i> from scratch • Nigerian staples <i>🌿</i>
+    </div>
+  </div>
+
+  <div class="dish-selector">
+    <button class="dish-btn active" data-dish="garri">🌟 Garri (Eba)</button>
+    <button class="dish-btn" data-dish="fufu">🤍 Cassava Fufu</button>
+    <button class="dish-btn" data-dish="abacha">🌶️ Abacha (African Salad)</button>
+  </div>
+
+  <div class="card" id="dishCard">
+    <!-- dynamic content injected via JS -->
+  </div>
+  <footer>
+    🇳🇬 Cassava kitchen · tap a dish to see preparation
+  </footer>
+</div>
+
+<script>
+  (function() {
+    // ----- DATA FOR CASSAVA DISHES -----
+    const dishes = {
+      garri: {
+        name: "Garri (Eba)",
+        icon: "🌟",
+        time: "~15 min",
+        ingredients: [
+          "Garri (fine cassava granules)",
+          "Boiling water",
+          "Wooden spatula (omorogun)"
+        ],
+        steps: [
+          "Boil water until it reaches a rolling boil.",
+          "Pour garri into a bowl; gradually add hot water while stirring vigorously.",
+          "Mix until smooth, firm dough forms. Adjust water/garri for desired texture.",
+          "Serve immediately with soups like egusi, okra, or bitter leaf."
+        ],
+        tip: "💡 Use hot water right off the boil for stretchy, lump-free eba."
+      },
+      fufu: {
+        name: "Cassava Fufu (Akpu)",
+        icon: "🤍",
+        time: "~20 min (pre-fermented)",
+        ingredients: [
+          "Fermented cassava paste (wet)",
+          "Water",
+          "Pot & wooden spatula"
+        ],
+        steps: [
+          "Dissolve fermented cassava paste in water, strain out any fibres.",
+          "Cook on medium heat, stirring constantly until thick and translucent.",
+          "Knead with spatula until smooth, stretchy ball forms.",
+          "Wrap in leaves or plastic to keep warm; serve with soup."
+        ],
+        tip: "💡 The more you knead, the smoother and stretchier the fufu."
+      },
+      abacha: {
+        name: "Abacha (African Salad)",
+        icon: "🌶️",
+        time: "~25 min",
+        ingredients: [
+          "Dried shredded cassava (abacha)",
+          "Palm oil, potash (kanwa)",
+          "Ugba (ukpaka), crayfish",
+          "Fresh pepper, onions, garden egg"
+        ],
+        steps: [
+          "Soak abacha in cold water for 10 mins, then drain.",
+          "Dissolve potash in water; mix with palm oil until yellow paste forms.",
+          "Combine abacha with oil mixture, ugba, ground crayfish, pepper.",
+          "Garnish with sliced onions, garden egg, and fried fish if desired."
+        ],
+        tip: "💡 Soak abacha briefly – it softens but retains a slight bite."
+      }
+    };
+
+    const dishKeys = ["garri", "fufu", "abacha"];
+    let activeDish = "garri";
+
+    const cardContainer = document.getElementById("dishCard");
+    const buttons = document.querySelectorAll(".dish-btn");
+
+    // ----- RENDER DISH INTO CARD -----
+    function renderDish(dishKey) {
+      const dish = dishes[dishKey];
+      if (!dish) return;
+
+      const ingredientsHTML = dish.ingredients.map(ing => 
+        `<span class="ingredient-item">🥄 ${ing}</span>`
+      ).join("");
+
+      const stepsHTML = dish.steps.map((step, idx) => 
+        `<div class="step">
+          <div class="step-number">${idx + 1}</div>
+          <p>${step}</p>
+        </div>`
+      ).join("");
+
+      const html = `
+        <div class="dish-title">
+          <h2>${dish.icon} ${dish.name}</h2>
+          <div class="time-badge">⏱️ ${dish.time}</div>
+        </div>
+        <div class="ingredients-box">
+          <h3>🧂 Ingredients</h3>
+          <div class="ingredient-list">
+            ${ingredientsHTML}
+          </div>
+        </div>
+        <div class="steps">
+          <h3 style="margin-bottom:0.2rem; color:#4a3516;">👩🏾‍🍳 Preparation steps</h3>
+          ${stepsHTML}
+        </div>
+        <div class="tip-box">
+          <span style="font-size:1.5rem;">✨</span> ${dish.tip}
+        </div>
+      `;
+
+      cardContainer.innerHTML = html;
+    }
+
+    // ----- UPDATE ACTIVE BUTTON STYLE -----
+    function setActiveButton(dishKey) {
+      buttons.forEach(btn => {
+        const btnDish = btn.getAttribute("data-dish");
+        if (btnDish === dishKey) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    // ----- EVENT LISTENER FOR BUTTONS -----
+    buttons.forEach(btn => {
+      btn.addEventListener("click", function(e) {
+        const dishKey = this.getAttribute("data-dish");
+        if (!dishKey || !dishes[dishKey]) return;
+        
+        activeDish = dishKey;
+        renderDish(dishKey);
+        setActiveButton(dishKey);
+      });
+    });
+
+    // Initial render
+    renderDish(activeDish);
+    setActiveButton(activeDish);
+
+    // Optional: small touch for mobile feedback
+  })();
+</script>
+</body>
+</html>
